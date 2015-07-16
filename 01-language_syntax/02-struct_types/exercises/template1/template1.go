@@ -10,16 +10,37 @@
 package main
 
 // Add imports.
+import "fmt"
 
 // Add user type and provide comment.
+type user struct {
+	name	string
+	email	string
+	age		int
+}
 
 // main is the entry point for the application.
 func main() {
 	// Declare variable of type user and init using a struct literal.
-
+	u1 := user{
+		name: "Gee",
+		email: "gee@test.com",
+		age: 12345,
+	}
 	// Display the field values.
+	fmt.Printf("%+v\n", u1)
 
 	// Declare a variable using an anonymous struct.
+	u2 := struct {
+		name	string
+		email	string
+		age		int
+	}{
+		name: "Charlyn",
+		email: "test@test.com",
+		age: 32,
+	}
 
 	// Display the field values.
+	fmt.Printf("%+v\n", u2)
 }

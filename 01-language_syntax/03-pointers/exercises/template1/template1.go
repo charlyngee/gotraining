@@ -12,16 +12,23 @@
 package main
 
 // Add imports.
+import "fmt"
 
 // main is the entry point for the application.
 func main() {
 	// Declare an integer variable with the value of 20.
+	a := 20
 
 	// Display the address of and value of the variable.
+	fmt.Println(&a, a)
 
 	// Declare a pointer variable of type int. Assign the
 	// address of the integer variable above.
+	var aptr *int
+	aptr = &a
 
 	// Display the address of, value of and the value the pointer
 	// points to.
+	fmt.Println(&aptr, aptr, *aptr)
+
 }

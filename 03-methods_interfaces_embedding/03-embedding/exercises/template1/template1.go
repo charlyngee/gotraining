@@ -10,7 +10,10 @@
 // two hockey values inside the slice of matchers and perform the search.
 package main
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 // matcher defines the behavior required for performing searches.
 type matcher interface {
@@ -35,23 +38,54 @@ func (s sport) Search(searchTerm string) bool {
 
 // Declare a struct type named hockey that represents specific
 // hockey information. Have it embed the sport type first.
+type hockey struct {
+	sport
+	hockeyData string
+}
 
 // Implement the matcher interface for hockey.
-func ( /* receiver type */ ) Search(searchTerm string) bool {
+func (h hockey) Search(searchTerm string) bool {
 	// Make sure you call into Search method for the embedded
 	// sport type.
+	if strings.Contains(h.hockeyData, searchTerm) {
+		return true
+	}
+	return h.sport.Search(searchTerm)
 
 	// Implement the search for the new fields.
-	return false
+	// return false
 }
 
 // main is the entry point for the application.
 func main() {
 	// Define the term to search.
+	findme := "test"
 
 	// Create a slice of matcher values to search.
+	teams := []matcher{
+		hockey{sport{"team1", "city1"}, "test1"},
+		sport{"team2", "city2"},
+		sport{"testteam", "city3"},
+		hockey{sport{"team4", "city4"}, "data4"},
+	}
 
 	// Display what we are searching for.
+	fmt.Println("Search for ", findme)
 
 	// Range of each matcher value and check the search term.
+	for _, v := range teams {
+		/*		if v.Search(findme) {
+					fmt.Printf("Found %s in %+v\n", findme, v)
+				} else {
+					fmt.Println("Not found")
+				}
+		*/
+		// "unboxing" = type assertion
+		insides, ok := v.(hockey)
+		if !ok {
+			fmt.Printf("Error on %+v\n", v)
+		} else {
+			fmt.Printf("insides are %+v\n", insides)
+		}
+	}
 }
